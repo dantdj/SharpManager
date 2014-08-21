@@ -6,5 +6,5 @@ SharpManager is a basic file manager that is currently in alpha, and written in 
 Images
 ------
 
-https://github.com/dantdj/SharpManager/raw/master/examplestart.png
-https://github.com/dantdj/SharpManager/raw/master/ui.png
+![UI on startup](https://github.com/dantdj/SharpManager/raw/master/examplestart.png)
+![UI example](https://github.com/dantdj/SharpManager/raw/master/ui.png)
