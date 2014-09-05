@@ -54,6 +54,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Helpers\HelpersWindows\ImageWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Helpers\HelpersWindows\MusicWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Helpers\HelpersWindows\VideoWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -64,6 +76,18 @@
     </Compile>
     <Compile Include="Helpers\FileManagement.cs" />
     <Compile Include="Helpers\FileProperties.cs" />
+    <Compile Include="Helpers\HelpersWindows\ImageWindow.xaml.cs">
+      <DependentUpon>ImageWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\HelpersWindows\MusicWindow.xaml.cs">
+      <DependentUpon>MusicWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\HelpersWindows\VideoWindow.xaml.cs">
+      <DependentUpon>VideoWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\ImagePreview.cs" />
+    <Compile Include="Helpers\MusicPreview.cs" />
+    <Compile Include="Helpers\VideoPreview.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
