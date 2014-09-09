@@ -1,41 +1,32 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using SharpManager.Helpers;
 
 namespace SharpManager
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    ///     Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
+        private readonly Stack<IEnumerable> _backStack = new Stack<IEnumerable>();
+        private readonly Stack<string> _previousDirectoryStack = new Stack<string>();
+        private string _currentDirectory;
+
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        string currentDirectory;
-        Stack<System.Collections.IEnumerable> back_stack = new Stack<System.Collections.IEnumerable>();
-        Stack<string> previousDirectory_stack = new Stack<string>();
-
         private void MainWindow1_Loaded(object sender, RoutedEventArgs e)
         {
-            WriteToGridView(Helpers.FileManagement.getDrives());
+            WriteToGridView(FileManagement.GetDrives());
         }
 
-        private void WriteToGridView(List<Helpers.FileProperties> fileList)
+        private void WriteToGridView(IEnumerable<FileProperties> fileList)
         {
             FileGrid.ItemsSource = fileList;
         }
@@ -44,16 +35,15 @@ namespace SharpManager
         {
             if (File.Exists(item))
             {
-                Helpers.FileManagement.openFile(item);
+                FileManagement.OpenFile(item);
             }
 
             else
             {
-                List<Helpers.FileProperties> fileList = new List<Helpers.FileProperties>();
-                fileList = Helpers.FileManagement.getDirectoryContents(item);
-                
+                List<FileProperties> fileList = FileManagement.GetDirectoryContents(item);
+
                 TB_CurrentDirectory.Text = item;
-                currentDirectory = item;
+                _currentDirectory = item;
 
                 SetPreviousReferences();
                 WriteToGridView(fileList);
@@ -62,8 +52,8 @@ namespace SharpManager
 
         private void SetPreviousReferences()
         {
-            back_stack.Push(FileGrid.ItemsSource);
-            previousDirectory_stack.Push(currentDirectory);
+            _backStack.Push(FileGrid.ItemsSource);
+            _previousDirectoryStack.Push(_currentDirectory);
         }
 
         private void IntoNewDirectoryFromDataGrid(string filename)
@@ -71,7 +61,7 @@ namespace SharpManager
             string item = filename;
             if (TB_CurrentDirectory.Text != "")
             {
-                item = currentDirectory + "\\" + filename;
+                item = _currentDirectory + "\\" + filename;
             }
             IntoNewDirectory(item);
         }
@@ -86,19 +76,19 @@ namespace SharpManager
 
         private void FileGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var selectedRow = FileGrid.SelectedItem as Helpers.FileProperties;
-            IntoNewDirectoryFromDataGrid(selectedRow.Filename);
+            var selectedRow = FileGrid.SelectedItem as FileProperties;
+            if (selectedRow != null) IntoNewDirectoryFromDataGrid(selectedRow.Filename);
         }
 
         private void B_Back_Click(object sender, RoutedEventArgs e)
         {
-            FileGrid.ItemsSource = back_stack.Pop();
-            TB_CurrentDirectory.Text = previousDirectory_stack.Pop();
+            FileGrid.ItemsSource = _backStack.Pop();
+            TB_CurrentDirectory.Text = _previousDirectoryStack.Pop();
         }
 
         private void B_Up_A_Level_Click(object sender, RoutedEventArgs e)
         {
-            string newDirectory = Directory.GetParent(currentDirectory).FullName;
+            string newDirectory = Directory.GetParent(_currentDirectory).FullName;
             IntoNewDirectory(newDirectory);
         }
     }
