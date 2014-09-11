@@ -8,5 +8,14 @@ namespace SharpManager.Helpers
 {
     class ImagePreview
     {
+        public void DisplayImage()
+        {
+            
+        }
+
+        public void GetImageProperties()
+        {
+            
+        }
     }
 }
