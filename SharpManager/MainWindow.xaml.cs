@@ -12,7 +12,7 @@ namespace SharpManager
     /// </summary>
     public partial class MainWindow
     {
-        private Stack<string> _previousDirectoryStack = new Stack<string>();
+        private readonly Stack<string> _previousDirectoryStack = new Stack<string>();
         private string _currentDirectory;
 
         public MainWindow()
@@ -43,10 +43,8 @@ namespace SharpManager
 
                 SetPreviousReferences();
 
-                _currentDirectory = item;
                 TB_CurrentDirectory.Text = item;
-                
-
+                _currentDirectory = item;
                 
                 WriteToGridView(fileList);
             }
@@ -84,7 +82,25 @@ namespace SharpManager
 
         private void B_Back_Click(object sender, RoutedEventArgs e)
         {
-            IntoNewDirectory(_previousDirectoryStack.Pop());
+            string item = _previousDirectoryStack.Pop();
+            var fileList = new List<FileProperties>();
+            if (item != null)
+            {
+                fileList = FileManagement.GetDirectoryContents(item);
+            }
+
+            else
+            {
+                WriteToGridView(FileManagement.GetDrives());
+                TB_CurrentDirectory.Text = "";
+                _currentDirectory = "";
+                return;
+            }
+
+            TB_CurrentDirectory.Text = item;
+            _currentDirectory = item;
+
+            WriteToGridView(fileList);
         }
 
         private void B_Up_A_Level_Click(object sender, RoutedEventArgs e)
