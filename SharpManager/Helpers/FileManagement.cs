@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Windows;
 
 namespace SharpManager.Helpers
 {
-    class FileManagement
+    internal class FileManagement
     {
         public static List<FileProperties> GetDrives()
         {
@@ -22,17 +24,17 @@ namespace SharpManager.Helpers
 
             if (bytes > bytesInGigabyte)
             {
-                return Math.Round((bytes / bytesInGigabyte), 2) + " GB";
+                return Math.Round((bytes/bytesInGigabyte), 2) + " GB";
             }
 
             if (bytes > bytesInMegabyte)
             {
-                return Math.Round((bytes / bytesInMegabyte), 2) + " MB";
+                return Math.Round((bytes/bytesInMegabyte), 2) + " MB";
             }
 
             if (bytes > bytesInKilobyte)
             {
-                return Math.Round((bytes / bytesInKilobyte), 2) + " KB";
+                return Math.Round((bytes/bytesInKilobyte), 2) + " KB";
             }
 
             return bytes + " B";
@@ -42,11 +44,11 @@ namespace SharpManager.Helpers
         {
             Directory.CreateDirectory(targetPath);
         }
-    
+
         public static List<FileProperties> GetDirectoryContents(string dirToSearch)
         {
-            var files = GetFileList(dirToSearch);
-            var subDirectories = GetDirectoryList(dirToSearch);
+            IEnumerable<FileProperties> files = GetFileList(dirToSearch);
+            IEnumerable<FileProperties> subDirectories = GetDirectoryList(dirToSearch);
             var contentsOfDirectory = new List<FileProperties>();
 
             contentsOfDirectory.AddRange(subDirectories);
@@ -54,15 +56,24 @@ namespace SharpManager.Helpers
 
             return contentsOfDirectory;
         }
-    
+
         private static IEnumerable<FileProperties> GetFileList(string dirToSearch)
         {
-            return (from file in Directory.GetFiles(dirToSearch) let fileinfo = new FileInfo(file) select new FileProperties(Path.GetFileName(file), GetFileType(fileinfo.FullName), GetByteConversion(fileinfo.Length), fileinfo.CreationTime.ToString(), fileinfo.LastWriteTime.ToString())).ToList();
+            return (from file in Directory.GetFiles(dirToSearch)
+                let fileinfo = new FileInfo(file)
+                select
+                    new FileProperties(Path.GetFileName(file), GetFileType(fileinfo.FullName),
+                        GetByteConversion(fileinfo.Length), fileinfo.CreationTime.ToString(),
+                        fileinfo.LastWriteTime.ToString())).ToList();
         }
 
         private static IEnumerable<FileProperties> GetDirectoryList(string dirToSearch)
         {
-            return (from subDirectory in Directory.GetDirectories(dirToSearch) let directoryinfo = new DirectoryInfo(subDirectory) select new FileProperties(Path.GetFileName(subDirectory), "Folder", "", directoryinfo.CreationTime.ToString(), directoryinfo.LastWriteTime.ToString())).ToList();
+            return (from subDirectory in Directory.GetDirectories(dirToSearch)
+                let directoryinfo = new DirectoryInfo(subDirectory)
+                select
+                    new FileProperties(Path.GetFileName(subDirectory), "Folder", "",
+                        directoryinfo.CreationTime.ToString(), directoryinfo.LastWriteTime.ToString())).ToList();
         }
 
         private static string GetFileType(string filepath)
@@ -103,16 +114,21 @@ namespace SharpManager.Helpers
             return filetype;
         }
 
+        public static void MoveFile(string filename, string destination)
+        {
+            Directory.Move(filename, destination);
+        }
+
         public static void OpenFile(string filename)
         {
             try
             {
-                System.Diagnostics.Process.Start(filename);
+                Process.Start(filename);
             }
 
             catch
             {
-                System.Windows.MessageBox.Show("Could not open the file.");
+                MessageBox.Show("Could not open the file.");
             }
         }
     }
