@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using SharpManager.Helpers.HelpersWindows;
 
 namespace SharpManager.Helpers
 {
@@ -123,6 +124,13 @@ namespace SharpManager.Helpers
         {
             try
             {
+                if (filename.EndsWith(".jpg"))
+                {
+                    var imageWindow = new ImageWindow {ImagePath = filename};
+                    imageWindow.Show();
+                    return;
+                }
+
                 Process.Start(filename);
             }
 
