@@ -9,7 +9,7 @@ using SharpManager.Helpers.HelpersWindows;
 namespace SharpManager.Helpers
 {
     internal class FileManagement
-    {
+    { 
         public static List<FileProperties> GetDrives()
         {
             // Return a list of available drives
@@ -122,9 +122,11 @@ namespace SharpManager.Helpers
 
         public static void OpenFile(string filename)
         {
+            List<string> imageExtensions = new List<string>() {".jpg", ".png", ".bmp", ".tiff", ".tif", ".gif", ".ico"};
+
             try
             {
-                if (filename.EndsWith(".jpg"))
+                if (imageExtensions.Contains(Path.GetExtension(filename)))
                 {
                     var imageWindow = new ImageWindow {ImagePath = filename};
                     imageWindow.Show();
