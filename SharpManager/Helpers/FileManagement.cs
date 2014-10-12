@@ -141,5 +141,10 @@ namespace SharpManager.Helpers
                 MessageBox.Show("Could not open the file.");
             }
         }
+
+        public static void DeleteFile(string filename)
+        {
+            File.Delete(filename);
+        }
     }
 }
