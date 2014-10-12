@@ -122,7 +122,7 @@ namespace SharpManager.Helpers
 
         public static void OpenFile(string filename)
         {
-            List<string> imageExtensions = new List<string>() {".jpg", ".png", ".bmp", ".tiff", ".tif", ".gif", ".ico"};
+            var imageExtensions = new List<string> {".jpg", ".png", ".bmp", ".tiff", ".tif", ".gif", ".ico"};
 
             try
             {
