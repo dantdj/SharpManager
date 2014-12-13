@@ -106,7 +106,7 @@ namespace SharpManager.Helpers
                 {".md", "Markdown File"},
                 {".sln", "Visual Studio Solution File"}
             };
-            string filetype = "";
+            string filetype = null;
             string extension = Path.GetExtension(filepath);
             if (extension != null && fileTypeDict.ContainsKey(extension))
             {

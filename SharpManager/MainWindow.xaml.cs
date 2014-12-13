@@ -12,7 +12,7 @@ namespace SharpManager
     public partial class MainWindow
     {
         private readonly Stack<string> _previousDirectoryStack = new Stack<string>();
-        private string _currentDirectory;
+        public string CurrentDirectory;
 
         public MainWindow()
         {
@@ -43,7 +43,7 @@ namespace SharpManager
                 SetPreviousReferences();
 
                 TB_CurrentDirectory.Text = item;
-                _currentDirectory = item;
+                CurrentDirectory = item;
                 
                 WriteToGridView(fileList);
             }
@@ -51,7 +51,7 @@ namespace SharpManager
 
         private void SetPreviousReferences()
         {
-            _previousDirectoryStack.Push(_currentDirectory);
+            _previousDirectoryStack.Push(CurrentDirectory);
         }
 
         private void IntoNewDirectoryFromDataGrid(string filename)
@@ -60,9 +60,15 @@ namespace SharpManager
             
             if (TB_CurrentDirectory.Text != "")
             {
-                item = _currentDirectory + "\\" + filename;
+                item = CurrentDirectory + "\\" + filename;
             }
             IntoNewDirectory(item);
+        }
+
+         private void RefreshGridView()
+        {
+            List<FileProperties> fileList = FileManagement.GetDirectoryContents(CurrentDirectory);
+            WriteToGridView(fileList);
         }
 
         private void TB_CurrentDirectory_KeyDown(object sender, KeyEventArgs e)
@@ -82,30 +88,30 @@ namespace SharpManager
         private void B_Back_Click(object sender, RoutedEventArgs e)
         {
             string item = _previousDirectoryStack.Pop();
-            var fileList = new List<FileProperties>();
-            if (item != null)
-            {
-                fileList = FileManagement.GetDirectoryContents(item);
-            }
-
-            else
+            if (item == null)
             {
                 WriteToGridView(FileManagement.GetDrives());
                 TB_CurrentDirectory.Text = "";
-                _currentDirectory = "";
+                CurrentDirectory = "";
                 return;
             }
+            List<FileProperties> fileList = FileManagement.GetDirectoryContents(item);
 
             TB_CurrentDirectory.Text = item;
-            _currentDirectory = item;
+            CurrentDirectory = item;
 
             WriteToGridView(fileList);
         }
 
         private void B_Up_A_Level_Click(object sender, RoutedEventArgs e)
         {
-            string newDirectory = Directory.GetParent(_currentDirectory).FullName;
+            string newDirectory = Directory.GetParent(CurrentDirectory).FullName;
             IntoNewDirectory(newDirectory);
+        }
+
+        private void B_Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            RefreshGridView();
         }
     }
 }

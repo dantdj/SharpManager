@@ -11,10 +11,16 @@
                 <DataGridTextColumn Binding="{Binding DateCreated}" ClipboardContentBinding="{x:Null}" Header="Date Created"/>
                 <DataGridTextColumn Binding="{Binding DateModified}" ClipboardContentBinding="{x:Null}" Header="Date Modified"/>
             </DataGrid.Columns>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Delete"></MenuItem>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
         </DataGrid>
         <TextBox x:Name="TB_CurrentDirectory" HorizontalAlignment="Left" Height="23" Margin="10,11,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="497" KeyDown="TB_CurrentDirectory_KeyDown"/>
         <Button x:Name="B_Back" Content="Back" HorizontalAlignment="Left" Margin="10,289,0,0" VerticalAlignment="Top" Width="75" Click="B_Back_Click"/>
         <Button x:Name="B_Up_A_Level" Content="Up A Level" HorizontalAlignment="Left" Margin="90,289,0,0" VerticalAlignment="Top" Width="75" Click="B_Up_A_Level_Click"/>
+        <Button x:Name="B_Refresh" Content="Refresh" HorizontalAlignment="Left" Margin="170,289,0,0" VerticalAlignment="Top" Width="75" Click="B_Refresh_Click"/>
 
     </Grid>
 </Window>
