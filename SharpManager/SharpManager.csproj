@@ -86,6 +86,7 @@
       <DependentUpon>VideoWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ImagePreview.cs" />
+    <Compile Include="Helpers\ImgurHandler.cs" />
     <Compile Include="Helpers\MusicPreview.cs" />
     <Compile Include="Helpers\VideoPreview.cs" />
     <Compile Include="MainWindow.xaml.cs">
