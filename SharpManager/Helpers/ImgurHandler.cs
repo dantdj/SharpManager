@@ -3,6 +3,7 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Net;
 using System.Windows;
+using System.Windows.Documents;
 using System.Xml.Linq;
 
 namespace SharpManager.Helpers
@@ -11,7 +12,7 @@ namespace SharpManager.Helpers
     {
         private const string ClientId = "0751ca59efd1d0d";
 
-        public static void UploadImage(string image)
+        public static string UploadImage(string image)
         {
             if (image == null) throw new ArgumentNullException("image");
             using (var w = new WebClient())
@@ -23,8 +24,10 @@ namespace SharpManager.Helpers
                 };
 
                 byte[] response = w.UploadValues("https://api.imgur.com/3/upload.xml", values);
-
-                MessageBox.Show(XDocument.Load(new MemoryStream(response)).ToString());
+                var document = XDocument.Load(new MemoryStream(response));
+                var link = document.Element("data").Element("link").Value;
+                
+                return link;
             }
         }
     }
