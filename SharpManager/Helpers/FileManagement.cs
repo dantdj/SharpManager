@@ -108,10 +108,16 @@ namespace SharpManager.Helpers
             };
             string filetype = null;
             string extension = Path.GetExtension(filepath);
+
             if (extension != null && fileTypeDict.ContainsKey(extension))
             {
                 filetype = fileTypeDict[extension];
             }
+            else
+            {
+                filetype = "File";
+            }
+
             return filetype;
         }
 
