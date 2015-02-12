@@ -1,24 +1,23 @@
-﻿".txt", "Text Document"
-".exe", "Application"
-".py", "Python File"
-".jpg", "Image File"
-".png", "Image File"
-".dll", "Application Extension"
-".js", "Javascript File"
-".mp3", "Music File"
-".mp4", "Video File"
-".wmv", "Video File"
-".ini", "Configuration File"
-".sys", "System File"
-".log", "Log File"
-".rar", "RAR Archive"
-".zip", "Compressed folder"
-".bmp", "Image File"
-".MSI", "MSI File"
-".cab", "cab File"
-".gitignore", "Git Ignore File"
-".gitattributes", "Git Attributes File"
-".csproj", "C# Project File"
-"", "File"
-".md", "Markdown File"
-".sln", "Visual Studio Solution File"
+﻿.txt,Text Document
+.exe,Application
+.py,Python File
+.jpg,Image File
+.png,Image File
+.dll,Application Extension
+.js,Javascript File
+.mp3,Music File
+.mp4,Video File
+.wmv,Video File
+.ini,Configuration File
+.sys,System File
+.log,Log File
+.rar,RAR Archive
+.zip,Compressed folder
+.bmp,Image File
+.MSI,MSI File
+.cab,cab File
+.gitignore,Git Ignore File
+.gitattributes,Git Attributes File
+.csproj,C# Project File
+.md,Markdown File
+.sln,Visual Studio Solution File

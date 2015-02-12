@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using SharpManager.Helpers.HelpersWindows;
+using SharpManager.Properties;
 
 namespace SharpManager.Helpers
 {
@@ -79,33 +80,12 @@ namespace SharpManager.Helpers
 
         private static string GetFileType(string filepath)
         {
-            var fileTypeDict = new Dictionary<string, string>
-            {
-                {".txt", "Text Document"},
-                {".exe", "Application"},
-                {".py", "Python File"},
-                {".jpg", "Image File"},
-                {".png", "Image File"},
-                {".dll", "Application Extension"},
-                {".js", "Javascript File"},
-                {".mp3", "Music File"},
-                {".mp4", "Video File"},
-                {".wmv", "Video File"},
-                {".ini", "Configuration File"},
-                {".sys", "System File"},
-                {".log", "Log File"},
-                {".rar", "RAR Archive"},
-                {".zip", "Compressed folder"},
-                {".bmp", "Image File"},
-                {".MSI", "MSI File"},
-                {".cab", "cab File"},
-                {".gitignore", "Git Ignore File"},
-                {".gitattributes", "Git Attributes File"},
-                {".csproj", "C# Project File"},
-                {"", "File"},
-                {".md", "Markdown File"},
-                {".sln", "Visual Studio Solution File"}
-            };
+            var fileTypeDict = new Dictionary<string, string>();
+
+            string files = Resources.files;
+            fileTypeDict = files.Split(new[] { Environment.NewLine }, StringSplitOptions.None)
+             .ToDictionary(x => x.Split(',')[0], x => x.Split(',')[1]);
+
             string filetype = null;
             string extension = Path.GetExtension(filepath);
 
@@ -115,7 +95,7 @@ namespace SharpManager.Helpers
             }
             else
             {
-                filetype = "File";
+                filetype = extension;
             }
 
             return filetype;
